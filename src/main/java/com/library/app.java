@@ -1,6 +1,6 @@
-package com.library;
+package main.java.com.library;
 
-import com.library.Utils.DataSeeder;
+import main.java.com.library.Utils.DataSeeder;
 
 public class app {
     public static void main(String[] args) {

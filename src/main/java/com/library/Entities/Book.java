@@ -1,9 +1,8 @@
-package com.library.Entities;
+package main.java.com.library.Entities;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static com.library.Utils.Constants.MAX_LOAN_DAYS;
+import static main.java.com.library.Utils.Constants.MAX_LOAN_DAYS;
 
 public class Book {
     private String id;

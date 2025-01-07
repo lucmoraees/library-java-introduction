@@ -1,6 +1,6 @@
-package com.library.Repositories;
+package main.java.com.library.Repositories;
 
-import com.library.Entities.User;
+import main.java.com.library.Entities.User;
 import java.util.List;
 import java.util.Optional;
 

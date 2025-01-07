@@ -1,4 +1,4 @@
-package com.library.Entities;
+package main.java.com.library.Entities;
 
 public enum UserLevel {
     ADMIN("Admin"),

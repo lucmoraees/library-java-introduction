@@ -1,8 +1,8 @@
-package com.library.Repositories.impl;
+package main.java.com.library.Repositories.impl;
 
-import com.library.Entities.User;
-import com.library.Entities.UserLevel;
-import com.library.Repositories.UserRepository;
+import main.java.com.library.Entities.User;
+import main.java.com.library.Entities.UserLevel;
+import main.java.com.library.Repositories.UserRepository;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.library.Utils.Constants.USERS_FILE_PATH;
-import static com.library.Utils.ConvertToCsv.convertUserToCsvLine;
+import static main.java.com.library.Utils.Constants.USERS_FILE_PATH;
+import static main.java.com.library.Utils.ConvertToCsv.convertUserToCsvLine;
 
 public class UserRepositoryImpl implements UserRepository {
     public UserRepositoryImpl() {

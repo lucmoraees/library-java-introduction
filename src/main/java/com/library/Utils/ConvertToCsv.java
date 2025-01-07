@@ -1,8 +1,8 @@
-package com.library.Utils;
+package main.java.com.library.Utils;
 
-import com.library.Entities.Book;
-import com.library.Entities.Loan;
-import com.library.Entities.User;
+import main.java.com.library.Entities.Book;
+import main.java.com.library.Entities.Loan;
+import main.java.com.library.Entities.User;
 
 public class ConvertToCsv {
     public static String convertBookToCsvLine(Book book) {

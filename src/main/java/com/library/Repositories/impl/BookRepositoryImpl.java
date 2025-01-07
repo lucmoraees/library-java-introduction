@@ -1,7 +1,7 @@
-package com.library.Repositories.impl;
+package main.java.com.library.Repositories.impl;
 
-import com.library.Entities.Book;
-import com.library.Repositories.BookRepository;
+import main.java.com.library.Entities.Book;
+import main.java.com.library.Repositories.BookRepository;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.library.Utils.Constants.BOOKS_FILE_PATH;
-import static com.library.Utils.ConvertToCsv.convertBookToCsvLine;
+import static main.java.com.library.Utils.Constants.BOOKS_FILE_PATH;
+import static main.java.com.library.Utils.ConvertToCsv.convertBookToCsvLine;
 
 public class BookRepositoryImpl implements BookRepository {
     public BookRepositoryImpl()  {

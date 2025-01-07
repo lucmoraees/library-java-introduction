@@ -1,7 +1,7 @@
-package com.library.Repositories.impl;
+package main.java.com.library.Repositories.impl;
 
-import com.library.Entities.Loan;
-import com.library.Repositories.LoanRepository;
+import main.java.com.library.Entities.Loan;
+import main.java.com.library.Repositories.LoanRepository;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.library.Utils.Constants.LOANS_FILE_PATH;
-import static com.library.Utils.ConvertToCsv.convertLoanToCsvLine;
+import static main.java.com.library.Utils.Constants.LOANS_FILE_PATH;
+import static main.java.com.library.Utils.ConvertToCsv.convertLoanToCsvLine;
 
 public class LoanRepositoryImpl implements LoanRepository {
     public LoanRepositoryImpl() {

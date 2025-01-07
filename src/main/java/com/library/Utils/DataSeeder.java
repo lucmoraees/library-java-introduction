@@ -1,14 +1,14 @@
-package com.library.Utils;
+package main.java.com.library.Utils;
 
-import com.library.Entities.Book;
-import com.library.Entities.User;
-import com.library.Entities.UserLevel;
-import com.library.Repositories.BookRepository;
-import com.library.Repositories.LoanRepository;
-import com.library.Repositories.UserRepository;
-import com.library.Repositories.impl.BookRepositoryImpl;
-import com.library.Repositories.impl.LoanRepositoryImpl;
-import com.library.Repositories.impl.UserRepositoryImpl;
+import main.java.com.library.Entities.Book;
+import main.java.com.library.Entities.User;
+import main.java.com.library.Entities.UserLevel;
+import main.java.com.library.Repositories.BookRepository;
+import main.java.com.library.Repositories.LoanRepository;
+import main.java.com.library.Repositories.UserRepository;
+import main.java.com.library.Repositories.impl.BookRepositoryImpl;
+import main.java.com.library.Repositories.impl.LoanRepositoryImpl;
+import main.java.com.library.Repositories.impl.UserRepositoryImpl;
 
 import java.util.UUID;
 
