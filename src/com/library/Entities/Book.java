@@ -3,14 +3,23 @@ package com.library.Entities;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static com.library.Utils.Constants.MAX_LOAN_DAYS;
+
 public class Book {
     private String id;
     private String title;
     private String description;
-    private LocalDateTime loanStartDate;
+    private int LoanDuration = MAX_LOAN_DAYS;
 
     public Book() {
         this.id = UUID.randomUUID().toString();
+    }
+
+    public Book(String id, String title, String description, int LoanDuration) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.LoanDuration = LoanDuration;
     }
 
     public String getId() {
@@ -37,11 +46,11 @@ public class Book {
         this.description = description;
     }
 
-    public LocalDateTime getLoanStartDate() {
-        return loanStartDate;
+    public int getLoanDuration() {
+        return LoanDuration;
     }
 
-    public void setLoanStartDate() {
-        this.loanStartDate = LocalDateTime.now();
+    public void setLoanDuration(int loanDuration) {
+        this.LoanDuration = loanDuration;
     }
 }
