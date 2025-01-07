@@ -1,7 +1,10 @@
 package com.library;
 
+import com.library.Utils.DataSeeder;
+
 public class app {
     public static void main(String[] args) {
-        System.out.println("Hello World");
+        DataSeeder seeder = new DataSeeder();
+        seeder.seed();
     }
 }

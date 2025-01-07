@@ -16,6 +16,19 @@ import static com.library.Utils.Constants.BOOKS_FILE_PATH;
 import static com.library.Utils.ConvertToCsv.convertBookToCsvLine;
 
 public class BookRepositoryImpl implements BookRepository {
+    public BookRepositoryImpl()  {
+        Path path = Paths.get(BOOKS_FILE_PATH);
+        try {
+            if (Files.notExists(path)) {
+                Files.createFile(path);
+                String header = "Title,Description" + System.lineSeparator();
+                Files.write(path, header.getBytes(), StandardOpenOption.APPEND);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public Optional<Book> findById(int bookId) {
         Path path = Paths.get(BOOKS_FILE_PATH);
@@ -44,7 +57,7 @@ public class BookRepositoryImpl implements BookRepository {
 
         try {
             if (!Files.exists(path)) {
-                Files.createDirectories(path);
+                Files.createFile(path);
                 String header = "Title,Description" + System.lineSeparator();
                 Files.write(path, header.getBytes(), StandardOpenOption.APPEND);
             }
