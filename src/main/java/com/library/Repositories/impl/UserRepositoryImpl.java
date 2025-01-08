@@ -23,8 +23,6 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             if (Files.notExists(path)) {
                 Files.createFile(path);
-                String header = "Id,Name,Username,Level" + System.lineSeparator();
-                Files.write(path, header.getBytes(), StandardOpenOption.APPEND);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,30 +36,27 @@ public class UserRepositoryImpl implements UserRepository {
 
         try {
             Files.write(path, userRecord.getBytes(), StandardOpenOption.APPEND);
-            System.out.println("Usuário salvo com sucesso!");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void delete(User user) {
+    public void delete(String userId) {
         Path path = Paths.get(USERS_FILE_PATH);
 
         try {
             if (Files.notExists(path)) {
-                System.out.println("Arquivo de usuários não encontrado.");
-                return;
+                throw new RuntimeException("Arquivo de usuários não encontrado.");
             }
 
             List<String> lines = Files.readAllLines(path);
 
             List<String> updatedLines = lines.stream()
-                    .filter(line -> !line.startsWith(user.getId() + ","))
+                    .filter(line -> !line.startsWith(userId + ","))
                     .collect(Collectors.toList());
 
             Files.write(path, updatedLines, StandardOpenOption.TRUNCATE_EXISTING);
-            System.out.println("Usuário deletado com sucesso!");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,8 +73,8 @@ public class UserRepositoryImpl implements UserRepository {
                 return users;
             }
 
-            users = Files.readAllLines(path).stream()
-                    .skip(1)
+            users = Files.readAllLines(path)
+                    .stream()
                     .map(this::convertCsvLineToUser)
                     .collect(Collectors.toList());
         } catch (IOException e) {
@@ -112,10 +107,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     private User convertCsvLineToUser(String line) {
         String[] parts = line.split(",", 4);
-        User user = new User();
-        user.setName(parts[1]);
-        user.setUsername(parts[2]);
-        user.setLevel(UserLevel.valueOf(parts[3]));
+        String id = parts[0];
+        String name = parts[1];
+        String userName = parts[2];
+        UserLevel level = UserLevel.valueOf(parts[3]);
+        User user = new User(id, name, userName, level);
         return user;
     }
 }

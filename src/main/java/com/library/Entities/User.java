@@ -11,6 +11,20 @@ public class User {
     public User() {
         this.id = UUID.randomUUID().toString();
     }
+    
+    public User(String id, String name, String username, UserLevel level) {
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.level = level;
+    }
+
+    public User(String name, String username, UserLevel level) {
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+        this.username = username;
+        this.level = level;
+    }
 
     public String getId() {
         return id;

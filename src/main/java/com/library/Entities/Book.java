@@ -10,8 +10,11 @@ public class Book {
     private String description;
     private int LoanDuration = MAX_LOAN_DAYS;
 
-    public Book() {
-        this.id = UUID.randomUUID().toString();
+    public Book(String title, String description, int LoanDuration) {
+        this.id = UUID.randomUUID().toString();;
+        this.title = title;
+        this.description = description;
+        this.LoanDuration = LoanDuration;
     }
 
     public Book(String id, String title, String description, int LoanDuration) {

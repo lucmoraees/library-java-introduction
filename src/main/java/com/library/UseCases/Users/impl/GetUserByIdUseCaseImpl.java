@@ -21,6 +21,7 @@ public class GetUserByIdUseCaseImpl implements GetUserByIdUseCase {
         }
 
         Optional<User> user = userRepository.getUserById(userId);
+
         if (user.isEmpty()) {
             System.out.println("Nenhum usuário encontrado com o ID '" + userId + "'.");
         } else {

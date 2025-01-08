@@ -18,7 +18,7 @@ public class ListAvailableBooksUseCaseImpl implements ListAvailableBooksUseCase 
     public List<Book> execute() {
         List<Book> books = bookRepository.getAvailableBooks();
         if (books.isEmpty()) {
-            System.out.println("Nenhum livro disponível no momento.");
+            throw new RuntimeException("Nenhum livro disponível no momento.");
         }
         return books;
     }

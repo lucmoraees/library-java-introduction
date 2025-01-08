@@ -17,7 +17,6 @@ public class RegisterUserUseCaseImpl implements RegisterUserUseCase {
         if (user == null || user.getUsername() == null || user.getName() == null) {
             throw new IllegalArgumentException("Os dados do usuário não podem ser nulos.");
         }
-        userRepository.save(user);
-        System.out.println("Usuário '" + user.getUsername() + "' cadastrado com sucesso.");
-    }
+
+        userRepository.save(user);    }
 }

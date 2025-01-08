@@ -10,4 +10,5 @@ public interface BookRepository {
     void deleteBook(String bookId);
     List<Book> getAvailableBooks();
     void updateLoanDuration(String bookId, int days);
+    Optional<Book> getBookById(String bookId);
 }

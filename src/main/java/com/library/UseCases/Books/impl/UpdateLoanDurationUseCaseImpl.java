@@ -15,12 +15,13 @@ public class UpdateLoanDurationUseCaseImpl implements UpdateLoanDurationUseCase 
     @Override
     public void execute(String bookId, int days) {
         if (bookId == null || bookId.isEmpty()) {
-            throw new IllegalArgumentException("O ID do livro não pode ser nulo ou vazio.");
+            throw new RuntimeException("O ID do livro não pode ser nulo ou vazio.");
         }
+
         if (days <= 0 || days > MAX_LOAN_DAYS) {
-            throw new IllegalArgumentException("O tempo de empréstimo deve estar entre 1 e " + MAX_LOAN_DAYS + " dias.");
+            throw new RuntimeException("O tempo de empréstimo deve estar entre 1 e " + MAX_LOAN_DAYS + " dias.");
         }
+
         bookRepository.updateLoanDuration(bookId, days);
-        System.out.println("Tempo de empréstimo atualizado para " + days + " dias.");
     }
 }

@@ -2,16 +2,17 @@ package main.java.com.library.UseCases.Loans.impl;
 
 import main.java.com.library.Entities.Loan;
 import main.java.com.library.Repositories.LoanRepository;
-import main.java.com.library.UseCases.Loans.GetLoandsByUserUseCase;
+import main.java.com.library.UseCases.Loans.GetLoansByUserUseCase;
+import main.java.com.library.UseCases.Loans.GetLoansByUserUseCase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetLoandsByUserUseCaseImpl implements GetLoandsByUserUseCase {
+public class GetLoansByUserUseCaseImpl implements GetLoansByUserUseCase {
 
     private final LoanRepository loanRepository;
 
-    public GetLoandsByUserUseCaseImpl(LoanRepository loanRepository) {
+    public GetLoansByUserUseCaseImpl(LoanRepository loanRepository) {
         this.loanRepository = loanRepository;
     }
 
@@ -22,12 +23,11 @@ public class GetLoandsByUserUseCaseImpl implements GetLoandsByUserUseCase {
         }
 
         List<Loan> loans = loanRepository.getActiveLoansByUser(userId);
+
         if (loans.isEmpty()) {
-            System.out.println("Nenhum empréstimo ativo encontrado para o usuário com ID '" + userId + "'.");
-            return new ArrayList<>();
+            throw new RuntimeException("Nenhum empréstimo ativo encontrado para o usuário com ID '" + userId + "'.");
         }
 
-        System.out.println("Empréstimos ativos encontrados para o usuário com ID '" + userId + "': " + loans.size());
         return loans;
     }
 }

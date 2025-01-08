@@ -21,8 +21,6 @@ public class BookRepositoryImpl implements BookRepository {
         try {
             if (Files.notExists(path)) {
                 Files.createFile(path);
-                String header = "Title,Description" + System.lineSeparator();
-                Files.write(path, header.getBytes(), StandardOpenOption.APPEND);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -35,12 +33,10 @@ public class BookRepositoryImpl implements BookRepository {
 
         try {
             if (Files.notExists(path)) {
-                System.out.println("Arquivo não encontrado.");
-                return Optional.empty();
+                throw new RuntimeException("Arquivo não encontrado.");
             }
 
             return Files.readAllLines(path).stream()
-                    .skip(1)
                     .map(this::convertCsvLineToBook)
                     .filter(book -> book.getId().equals(bookId))
                     .findFirst();
@@ -56,12 +52,6 @@ public class BookRepositoryImpl implements BookRepository {
         Path path = Paths.get(BOOKS_FILE_PATH);
 
         try {
-            if (!Files.exists(path)) {
-                Files.createFile(path);
-                String header = "Title,Description" + System.lineSeparator();
-                Files.write(path, header.getBytes(), StandardOpenOption.APPEND);
-            }
-
             String content = convertBookToCsvLine(book) + System.lineSeparator();
             Files.write(path, content.getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
@@ -75,8 +65,7 @@ public class BookRepositoryImpl implements BookRepository {
 
         try {
             if (Files.notExists(path)) {
-                System.out.println("Arquivo não encontrado.");
-                return;
+                throw new RuntimeException("Arquivo não encontrado.");
             }
 
             List<String> lines = Files.readAllLines(path);
@@ -86,7 +75,6 @@ public class BookRepositoryImpl implements BookRepository {
                     .collect(Collectors.toList());
 
             Files.write(path, updatedLines, StandardOpenOption.TRUNCATE_EXISTING);
-            System.out.println("Livro com ID " + bookId + " deletado com sucesso!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,11 +87,10 @@ public class BookRepositoryImpl implements BookRepository {
 
         try {
             if (Files.notExists(path)) {
-                System.out.println("Arquivo não encontrado.");
-                return books;
+                throw new RuntimeException("Arquivo não encontrado.");
             }
 
-            List<String> lines = Files.readAllLines(path).subList(1, Files.readAllLines(path).size());
+            List<String> lines = Files.readAllLines(path);
 
             for (String line : lines) {
                 Book book = convertCsvLineToBook(line);
@@ -124,8 +111,7 @@ public class BookRepositoryImpl implements BookRepository {
 
         try {
             if (Files.notExists(path)) {
-                System.out.println("Arquivo não encontrado.");
-                return;
+                throw new RuntimeException("Arquivo não encontrado.");
             }
 
             List<String> lines = Files.readAllLines(path);
@@ -142,7 +128,6 @@ public class BookRepositoryImpl implements BookRepository {
                     .collect(Collectors.toList());
 
             Files.write(path, updatedLines, StandardOpenOption.TRUNCATE_EXISTING);
-            System.out.println("Duração do empréstimo atualizada com sucesso!");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -151,8 +136,15 @@ public class BookRepositoryImpl implements BookRepository {
         }
     }
 
+    @Override
+    public Optional<Book> getBookById(String bookId) {
+        return getAvailableBooks().stream()
+                .filter(user -> user.getId().equals(bookId))
+                .findFirst();
+    }
+
     private Book convertCsvLineToBook(String line) {
-        String[] parts = line.split(",", 3);
+        String[] parts = line.split(",", 4);
         String id = parts[0];
         String title = parts[1];
         String description = parts[2];

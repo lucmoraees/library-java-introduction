@@ -23,8 +23,6 @@ public class LoanRepositoryImpl implements LoanRepository {
         try {
             if (Files.notExists(path)) {
                 Files.createFile(path);
-                String header = "Id,UserId,BookId,Active,StartDate,EndDate" + System.lineSeparator();
-                Files.write(path, header.getBytes(), StandardOpenOption.APPEND);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -32,13 +30,17 @@ public class LoanRepositoryImpl implements LoanRepository {
     }
 
     @Override
-    public void borrowBook(String userId, String bookId) {
-        Loan loan = new Loan(userId, bookId);
+    public void borrowBook(String userId, String bookId, int daysToReturn) {
+        Loan loan = new Loan();
+        loan.setUserId(userId);
+        loan.setBookId(bookId);
+        loan.setActive(true);
+        loan.setStartDate(LocalDateTime.now());
+        loan.setEndDate(LocalDateTime.now().plusDays(daysToReturn));
         String loanRecord = convertLoanToCsvLine(loan) + System.lineSeparator();
 
         try {
             Files.write(Paths.get(LOANS_FILE_PATH), loanRecord.getBytes(), StandardOpenOption.APPEND);
-            System.out.println("Empréstimo registrado com sucesso!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,26 +52,24 @@ public class LoanRepositoryImpl implements LoanRepository {
 
         try {
             if (Files.notExists(path)) {
-                System.out.println("Arquivo de empréstimos não encontrado.");
-                return;
+                throw new RuntimeException("Arquivo de empréstimos não encontrado.");
             }
 
             List<String> lines = Files.readAllLines(path);
 
             List<String> updatedLines = lines.stream()
                     .map(line -> {
-                        String[] parts = line.split(",", 6);
-                        if (parts[0].equals(loanId) && Boolean.parseBoolean(parts[3])) {
-                            parts[3] = "false";
-                            parts[5] = LocalDateTime.now().toString();
-                            return String.join(",", parts);
+                        Loan loan = convertCsvLineToLoan(line);
+
+                        if (!loan.getId().equals(loanId)) {
+                            return line;
                         }
-                        return line;
+
+                        return "";
                     })
                     .collect(Collectors.toList());
 
             Files.write(path, updatedLines, StandardOpenOption.TRUNCATE_EXISTING);
-            System.out.println("Livro devolvido com sucesso!");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -86,7 +86,6 @@ public class LoanRepositoryImpl implements LoanRepository {
             }
 
             return Files.readAllLines(path).stream()
-                    .skip(1) // Ignora o cabeçalho
                     .map(this::convertCsvLineToLoan)
                     .filter(loan -> loan.getId().equals(loanId))
                     .findFirst();
@@ -108,7 +107,6 @@ public class LoanRepositoryImpl implements LoanRepository {
             }
 
             activeLoans = Files.readAllLines(path).stream()
-                    .skip(1) // Ignora o cabeçalho
                     .map(this::convertCsvLineToLoan)
                     .filter(loan -> loan.getUserId().equals(userId) && loan.isActive())
                     .collect(Collectors.toList());
@@ -121,9 +119,16 @@ public class LoanRepositoryImpl implements LoanRepository {
 
     private Loan convertCsvLineToLoan(String line) {
         String[] parts = line.split(",", 6);
-        Loan loan = new Loan(parts[1], parts[2]);
-        loan.setActive(Boolean.parseBoolean(parts[3]));
-        loan.setEndDate(parts[5].isEmpty() ? null : LocalDateTime.parse(parts[5]));
+
+        String loanId = parts[0];
+        String userId = parts[1];
+        String bookId = parts[2];
+        Boolean active = Boolean.parseBoolean(parts[3]);
+        LocalDateTime startDate = LocalDateTime.parse(parts[4]);
+        LocalDateTime endDate = LocalDateTime.parse(parts[5]);
+
+        Loan loan = new Loan(loanId, userId, bookId, active, startDate, endDate);
+
         return loan;
     }
 }

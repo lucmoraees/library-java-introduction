@@ -6,7 +6,11 @@ import main.java.com.library.Entities.User;
 
 public class ConvertToCsv {
     public static String convertBookToCsvLine(Book book) {
-        return book.getId() + "," + book.getTitle() + "," + book.getDescription();
+        return String.join(",",
+                book.getId(),
+                book.getTitle(),
+                book.getDescription(),
+                String.valueOf(book.getLoanDuration()));
     }
 
     public static String convertLoanToCsvLine(Loan loan) {

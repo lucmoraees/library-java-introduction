@@ -11,12 +11,17 @@ public class Loan {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public Loan(String userId, String bookId) {
+    public Loan() {
         this.id = UUID.randomUUID().toString();
+    }
+
+    public Loan(String id, String userId, String bookId, boolean active, LocalDateTime startDate, LocalDateTime endDate) {
+        this.id = id;
         this.userId = userId;
         this.bookId = bookId;
-        this.active = true;
-        this.startDate = LocalDateTime.now();
+        this.active = active;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public String getId() {
@@ -27,8 +32,16 @@ public class Loan {
         return userId;
     }
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getBookId() {
         return bookId;
+    }
+
+    public void setBookId(String bookId) {
+        this.bookId = bookId;
     }
 
     public boolean isActive() {
@@ -43,12 +56,15 @@ public class Loan {
         return startDate;
     }
 
+    public void setStartDate(LocalDateTime startDate) {
+        this.startDate = startDate;
+    }
+
     public LocalDateTime getEndDate() {
         return endDate;
     }
 
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
-        this.active = false;
     }
 }

@@ -17,6 +17,5 @@ public class DeleteBookUseCaseImpl implements DeleteBookUseCase {
             throw new IllegalArgumentException("O ID do livro não pode ser nulo ou vazio.");
         }
         bookRepository.deleteBook(bookId);
-        System.out.println("Livro com ID '" + bookId + "' deletado com sucesso.");
     }
 }
